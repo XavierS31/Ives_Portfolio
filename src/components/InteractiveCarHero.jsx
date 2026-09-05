@@ -7,7 +7,7 @@ function InteractiveCarHero() {
   const currentTimeRef = useRef(0)
   const frameRef = useRef(null)
   const isReadyRef = useRef(false)
-  const dragRef = useRef({ active: false, startX: 0, startTime: 0 })
+  const dragRef = useRef({ pointerId: null })
 
   useEffect(() => {
     const video = videoRef.current
@@ -64,21 +64,23 @@ function InteractiveCarHero() {
       if (!isReadyRef.current) return
       if (event.pointerType === 'mouse') {
         setTargetFromX(event.clientX)
-      } else if (dragRef.current.active) {
-        const travel = (event.clientX - dragRef.current.startX) / Math.max(1, hero.getBoundingClientRect().width)
-        targetTimeRef.current = Math.min(endTime(), Math.max(0, dragRef.current.startTime + travel * endTime()))
+      } else if (dragRef.current.pointerId === event.pointerId) {
+        setTargetFromX(event.clientX)
       }
     }
 
     const onPointerDown = (event) => {
-      if (isReadyRef.current && event.pointerType !== 'mouse') {
-        dragRef.current = { active: true, startX: event.clientX, startTime: targetTimeRef.current }
+      if (isReadyRef.current && event.pointerType !== 'mouse' && event.isPrimary) {
+        dragRef.current.pointerId = event.pointerId
+        setTargetFromX(event.clientX)
         hero.setPointerCapture?.(event.pointerId)
       }
     }
 
-    const onPointerUp = () => {
-      dragRef.current.active = false
+    const onPointerUp = (event) => {
+      if (dragRef.current.pointerId === event.pointerId) {
+        dragRef.current.pointerId = null
+      }
     }
 
     video.addEventListener('loadedmetadata', revealAtEnd)
@@ -88,6 +90,7 @@ function InteractiveCarHero() {
     hero.addEventListener('pointerdown', onPointerDown)
     hero.addEventListener('pointerup', onPointerUp)
     hero.addEventListener('pointercancel', onPointerUp)
+    hero.addEventListener('lostpointercapture', onPointerUp)
     frameRef.current = requestAnimationFrame(animate)
 
     if (video.readyState >= 1) revealAtEnd()
@@ -101,6 +104,7 @@ function InteractiveCarHero() {
       hero.removeEventListener('pointerdown', onPointerDown)
       hero.removeEventListener('pointerup', onPointerUp)
       hero.removeEventListener('pointercancel', onPointerUp)
+      hero.removeEventListener('lostpointercapture', onPointerUp)
     }
   }, [])
 
@@ -114,14 +118,14 @@ function InteractiveCarHero() {
       <div className="hero-scrim absolute inset-0 -z-[5]" aria-hidden="true" />
       <div className="relative mx-auto flex min-h-[100dvh] max-w-[1400px] flex-col justify-end px-6 pb-9 pt-24 sm:px-8 lg:px-10 lg:pb-12">
         <div className="max-w-[600px]">
-          <p className="eyebrow mb-5 text-[10px] font-semibold tracking-[0.35em] text-zinc-300">Nissan Silvia</p>
-          <h1 className="display-title text-[clamp(5.5rem,20vw,17rem)] leading-[0.76] tracking-[-0.09em] text-white">S15</h1>
-          <p className="mt-8 max-w-xs text-xs uppercase tracking-[0.3em] text-zinc-300">Move to explore<br />1999 / 2002</p>
+          <p className="eyebrow mb-5 text-[10px] font-semibold tracking-[0.35em] text-zinc-300">Mechanical Engineering Student</p>
+          <h1 className="display-title text-[clamp(3rem,10vw,7rem)] leading-[0.9] tracking-[-0.06em] text-white">Ives<br />Sanjines<br />Iriarte</h1>
+          <p className="mt-8 max-w-xs text-xs uppercase tracking-[0.3em] text-zinc-300">University of Central Florida<br />Orlando, Florida</p>
         </div>
         <div className="mt-16 flex items-end justify-between border-t border-white/20 pt-4 font-mono text-[9px] tracking-[0.2em] text-zinc-400">
           <span className="hidden sm:inline">CURSOR CONTROL</span>
-          <span className="sm:hidden">DRAG TO EXPLORE</span>
-          <span className="hidden sm:inline">REAR / SIDE / RESPONSE</span>
+          <span className="sm:hidden">TOUCH &amp; DRAG TO EXPLORE</span>
+          <span className="hidden sm:inline">DESIGN / BUILD / TEST</span>
         </div>
       </div>
     </section>

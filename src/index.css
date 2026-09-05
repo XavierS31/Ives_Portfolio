@@ -9,6 +9,7 @@
 
 :root { color-scheme: dark; font-family: var(--font-sans); background: #08090a; }
 html { scroll-behavior: smooth; }
+section[id] { scroll-margin-top: 110px; }
 body { margin: 0; min-width: 320px; background: #08090a; }
 * { box-sizing: border-box; }
 ::selection { background: #c24d43; color: #fff; }
