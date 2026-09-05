@@ -17,6 +17,7 @@ const projects = [
   },
   {
     name: 'PowerTrain AI',
+    results: specs,
     date: 'Fall 2025',
     role: '1st Place — SHPE UCF Projects Competition',
     highlight: 'Autonomous driving with approximately 2–3× longer battery runtime.',
@@ -33,31 +34,35 @@ function PerformanceSection() {
       <div className="absolute inset-0 bg-gradient-to-r from-ink via-ink/70 to-transparent" aria-hidden="true" />
       <div className="relative mx-auto max-w-7xl px-6 py-28 md:px-10 lg:py-40">
         <div className="mb-20 max-w-xl">
-          <p className="eyebrow mb-6 text-[10px] font-semibold tracking-[0.35em] text-redline">Featured projects</p>
-          <h2 className="display-title text-5xl sm:text-7xl">Engineering, measured.</h2>
+          <p className="eyebrow mb-6 text-[50px] font-semibold tracking-[0.35em] text-redline">Projects</p>
+          
         </div>
-        <div className="mb-16 grid gap-12 md:grid-cols-2">
+        <div className="grid items-stretch gap-8 md:grid-cols-2">
           {projects.map((project) => (
-            <article key={project.name} className="border-t border-white/20 pt-6 md:pr-10">
+            <article key={project.name} className="engineering-card min-w-0 p-6 sm:p-8">
               <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-zinc-400">{project.date}</p>
-              <h3 className="mt-4 text-2xl font-semibold uppercase tracking-tight sm:text-3xl">{project.name}</h3>
+              <h3 className="entry-title mt-4">{project.name}</h3>
               <p className="mt-3 text-sm text-redline">{project.role}</p>
               <p className="mt-6 border-l border-redline pl-5 text-base text-zinc-100">{project.highlight}</p>
-              <p className="mt-6 text-sm leading-7 text-zinc-400">{project.description}</p>
-              <p className="mt-4 text-sm leading-7 text-zinc-400">{project.fabrication}</p>
+              <p className="section-copy mt-6">{project.description}</p>
+              <p className="section-copy mt-4">{project.fabrication}</p>
               <p className="mt-6 font-mono text-[10px] leading-6 text-zinc-300">{project.technologies}</p>
+              {project.results && (
+                <div className="mt-8 border-t border-redline/30 pt-6">
+                  <p className="mb-4 font-mono text-[10px] uppercase tracking-[0.2em] text-zinc-300">PowerTrain AI / Results</p>
+                  <dl className="grid gap-x-6 gap-y-5 sm:grid-cols-2">
+                    {project.results.map(([label, value]) => (
+                      <div key={label}>
+                        <dt className="font-mono text-[9px] leading-5 tracking-[0.12em] text-zinc-400">{label}</dt>
+                        <dd className="mt-1 text-2xl font-semibold tracking-tight text-zinc-100">{value}</dd>
+                      </div>
+                    ))}
+                  </dl>
+                </div>
+              )}
             </article>
           ))}
         </div>
-        <p className="mb-4 font-mono text-[10px] uppercase tracking-[0.2em] text-zinc-400">PowerTrain AI / Results</p>
-        <dl className="grid border-t border-white/20 md:grid-cols-2">
-          {specs.map(([label, value]) => (
-            <div key={label} className="group flex items-center justify-between gap-4 border-b border-white/15 py-6 md:mr-10">
-              <dt className="font-mono text-[10px] tracking-[0.25em] text-zinc-500">{label}</dt>
-              <dd className="text-right text-lg tracking-[0.08em] text-zinc-100 transition-colors group-hover:text-redline">{value}</dd>
-            </div>
-          ))}
-        </dl>
       </div>
     </section>
   )

@@ -13,15 +13,14 @@ function DesignSection() {
       <img src="/assets/nissan1.png" alt="Nissan Silvia S15 front three-quarter design" className="absolute inset-0 h-full w-full object-cover object-center opacity-45 grayscale" />
       <div className="absolute inset-0 bg-gradient-to-r from-ink via-ink/70 to-transparent" aria-hidden="true" />
       <div className="relative mx-auto grid min-h-[82dvh] max-w-7xl items-end gap-14 px-6 py-20 md:px-10 lg:grid-cols-2 lg:py-28">
-        <div>
-          <p className="eyebrow mb-6 text-[10px] font-semibold tracking-[0.35em] text-redline">Technical skills</p>
-          <h2 className="display-title max-w-3xl text-6xl sm:text-8xl lg:text-[7rem]">Design.<br /><span className="text-zinc-400">Build.</span><br />Refine.</h2>
+        <div className="lg:self-center">
+          <h2 className="display-title max-w-3xl text-6xl sm:text-8xl lg:text-[6rem]">Technical<br /><span className="text-zinc-400">SKILLS</span><br /></h2><span className="text-redline">.</span>
         </div>
         <dl className="border-t border-white/20 bg-ink/70 px-6">
           {skills.map(([category, tools]) => (
             <div key={category} className="border-b border-white/15 py-5">
-              <dt className="font-mono text-[10px] uppercase tracking-[0.2em] text-zinc-300">{category}</dt>
-              <dd className="mt-2 text-sm leading-7 text-zinc-300">{tools}</dd>
+              <dt className="text-lg font-semibold tracking-tight text-white sm:text-xl">{category}</dt>
+              <dd className="section-copy mt-3">{tools}</dd>
             </div>
           ))}
         </dl>

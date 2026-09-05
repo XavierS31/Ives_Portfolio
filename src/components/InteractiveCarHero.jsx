@@ -118,12 +118,12 @@ function InteractiveCarHero() {
       <div className="hero-scrim absolute inset-0 -z-[5]" aria-hidden="true" />
       <div className="relative mx-auto flex min-h-[100dvh] max-w-[1400px] flex-col justify-end px-6 pb-9 pt-24 sm:px-8 lg:px-10 lg:pb-12">
         <div className="max-w-[600px]">
-          <p className="eyebrow mb-5 text-[10px] font-semibold tracking-[0.35em] text-zinc-300">Mechanical Engineering Student</p>
+          <p className="eyebrow mb-5 text-[20px] font-bold tracking-[0.35em] text-white-600">Mechanical Engineering Student</p>
           <h1 className="display-title text-[clamp(3rem,10vw,7rem)] leading-[0.9] tracking-[-0.06em] text-white">Ives<br />Sanjines<br />Iriarte</h1>
           <p className="mt-8 max-w-xs text-xs uppercase tracking-[0.3em] text-zinc-300">University of Central Florida<br />Orlando, Florida</p>
         </div>
-        <div className="mt-16 flex items-end justify-between border-t border-white/20 pt-4 font-mono text-[9px] tracking-[0.2em] text-zinc-400">
-          <span className="hidden sm:inline">CURSOR CONTROL</span>
+        <div className="mt-16 flex items-end justify-between border-t border-white/20 pt-4 font-mono text-[15px] tracking-[0.2em] text-zinc-400">
+          <span className="hidden sm:inline">CAR ENTHUSIAST</span>
           <span className="sm:hidden">TOUCH &amp; DRAG TO EXPLORE</span>
           <span className="hidden sm:inline">DESIGN / BUILD / TEST</span>
         </div>
