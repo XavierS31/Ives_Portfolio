@@ -13,12 +13,15 @@ function InteractiveCarHero() {
     const video = videoRef.current
     const hero = heroRef.current
     if (!video || !hero) return undefined
+    let lastFrameTime = 0
+    const frameTolerance = 1 / 60
+    const endTime = () => Math.max(0, video.duration - frameTolerance)
 
     const revealAtEnd = () => {
       if (!Number.isFinite(video.duration) || video.duration <= 0) return
-      currentTimeRef.current = video.duration
-      targetTimeRef.current = video.duration
-      video.currentTime = video.duration
+      currentTimeRef.current = endTime()
+      targetTimeRef.current = endTime()
+      video.currentTime = endTime()
       isReadyRef.current = true
     }
 
@@ -31,12 +34,19 @@ function InteractiveCarHero() {
       if (video.currentTime >= video.duration - 0.05) revealVisual()
     }
 
-    const animate = () => {
+    const animate = (timestamp) => {
+      const elapsed = lastFrameTime ? Math.min(timestamp - lastFrameTime, 50) : 16.67
+      lastFrameTime = timestamp
       if (isReadyRef.current && Number.isFinite(video.duration)) {
         const delta = targetTimeRef.current - currentTimeRef.current
-        currentTimeRef.current += delta * 0.12
-        if (Math.abs(delta) < 0.001) currentTimeRef.current = targetTimeRef.current
-        if (Math.abs(video.currentTime - currentTimeRef.current) > 0.001) {
+        // Time-based easing feels consistent across refresh rates.
+        currentTimeRef.current += delta * (1 - Math.exp(-elapsed / 180))
+        if (Math.abs(delta) < frameTolerance) currentTimeRef.current = targetTimeRef.current
+        // Let the decoder finish before requesting another frame. Repeatedly
+        // interrupting an active seek can prevent frames from being displayed.
+        const settled = currentTimeRef.current === targetTimeRef.current
+        const difference = Math.abs(video.currentTime - currentTimeRef.current)
+        if (!video.seeking && difference > (settled ? 0.001 : frameTolerance)) {
           video.currentTime = currentTimeRef.current
         }
       }
@@ -45,21 +55,23 @@ function InteractiveCarHero() {
 
     const setTargetFromX = (x) => {
       if (!Number.isFinite(video.duration)) return
-      const normalized = Math.min(1, Math.max(0, x / window.innerWidth))
-      targetTimeRef.current = normalized * video.duration
+      const bounds = hero.getBoundingClientRect()
+      const normalized = Math.min(1, Math.max(0, (x - bounds.left) / Math.max(1, bounds.width)))
+      targetTimeRef.current = normalized * endTime()
     }
 
     const onPointerMove = (event) => {
+      if (!isReadyRef.current) return
       if (event.pointerType === 'mouse') {
         setTargetFromX(event.clientX)
       } else if (dragRef.current.active) {
-        const travel = (event.clientX - dragRef.current.startX) / window.innerWidth
-        targetTimeRef.current = Math.min(video.duration, Math.max(0, dragRef.current.startTime + travel * video.duration))
+        const travel = (event.clientX - dragRef.current.startX) / Math.max(1, hero.getBoundingClientRect().width)
+        targetTimeRef.current = Math.min(endTime(), Math.max(0, dragRef.current.startTime + travel * endTime()))
       }
     }
 
     const onPointerDown = (event) => {
-      if (event.pointerType !== 'mouse') {
+      if (isReadyRef.current && event.pointerType !== 'mouse') {
         dragRef.current = { active: true, startX: event.clientX, startTime: targetTimeRef.current }
         hero.setPointerCapture?.(event.pointerId)
       }
