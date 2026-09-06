@@ -8,6 +8,7 @@ function InteractiveCarHero() {
   const frameRef = useRef(null)
   const isReadyRef = useRef(false)
   const dragRef = useRef({ pointerId: null })
+  const scrubberRef = useRef(null)
 
   useEffect(() => {
     const video = videoRef.current
@@ -22,6 +23,7 @@ function InteractiveCarHero() {
       currentTimeRef.current = endTime()
       targetTimeRef.current = endTime()
       video.currentTime = endTime()
+      if (scrubberRef.current) scrubberRef.current.value = '1000'
       isReadyRef.current = true
     }
 
@@ -40,7 +42,7 @@ function InteractiveCarHero() {
       if (isReadyRef.current && Number.isFinite(video.duration)) {
         const delta = targetTimeRef.current - currentTimeRef.current
         // Time-based easing feels consistent across refresh rates.
-        currentTimeRef.current += delta * (1 - Math.exp(-elapsed / 180))
+        currentTimeRef.current += delta * (1 - Math.exp(-elapsed / 240))
         if (Math.abs(delta) < frameTolerance) currentTimeRef.current = targetTimeRef.current
         // Let the decoder finish before requesting another frame. Repeatedly
         // interrupting an active seek can prevent frames from being displayed.
@@ -58,6 +60,7 @@ function InteractiveCarHero() {
       const bounds = hero.getBoundingClientRect()
       const normalized = Math.min(1, Math.max(0, (x - bounds.left) / Math.max(1, bounds.width)))
       targetTimeRef.current = normalized * endTime()
+      if (scrubberRef.current) scrubberRef.current.value = String(Math.round(normalized * 1000))
     }
 
     const onPointerMove = (event) => {
@@ -83,6 +86,11 @@ function InteractiveCarHero() {
       }
     }
 
+    const onScrub = (event) => {
+      if (!isReadyRef.current || !Number.isFinite(video.duration)) return
+      targetTimeRef.current = (Number(event.currentTarget.value) / 1000) * endTime()
+    }
+
     video.addEventListener('loadedmetadata', revealAtEnd)
     video.addEventListener('loadeddata', onLoadedData)
     video.addEventListener('seeked', revealVisual)
@@ -91,6 +99,7 @@ function InteractiveCarHero() {
     hero.addEventListener('pointerup', onPointerUp)
     hero.addEventListener('pointercancel', onPointerUp)
     hero.addEventListener('lostpointercapture', onPointerUp)
+    scrubberRef.current?.addEventListener('input', onScrub)
     frameRef.current = requestAnimationFrame(animate)
 
     if (video.readyState >= 1) revealAtEnd()
@@ -105,6 +114,7 @@ function InteractiveCarHero() {
       hero.removeEventListener('pointerup', onPointerUp)
       hero.removeEventListener('pointercancel', onPointerUp)
       hero.removeEventListener('lostpointercapture', onPointerUp)
+      scrubberRef.current?.removeEventListener('input', onScrub)
     }
   }, [])
 
@@ -116,18 +126,25 @@ function InteractiveCarHero() {
         </video>
       </div>
       <div className="hero-scrim absolute inset-0 -z-[5]" aria-hidden="true" />
-      <div className="relative mx-auto flex min-h-[100dvh] max-w-[1400px] flex-col justify-end px-6 pb-9 pt-24 sm:px-8 lg:px-10 lg:pb-12">
+      <div className="relative mx-auto flex min-h-[100dvh] max-w-[1400px] flex-col justify-end px-5 pb-7 pt-28 sm:px-8 lg:px-10 lg:pb-12">
         <div className="max-w-[600px]">
-          <p className="eyebrow mb-5 text-[20px] font-bold tracking-[0.35em] text-white-600">Mechanical Engineering Student</p>
-          <h1 className="display-title text-[clamp(3rem,10vw,7rem)] leading-[0.9] tracking-[-0.06em] text-white">Ives<br />Sanjines<br />Iriarte</h1>
-          <p className="mt-8 max-w-xs text-xs uppercase tracking-[0.3em] text-zinc-300">University of Central Florida<br />Orlando, Florida</p>
+          <p className="eyebrow mb-4 text-[11px] font-bold tracking-[0.22em] text-zinc-200 sm:mb-5 sm:text-[13px] sm:tracking-[0.3em]">Mechanical Engineering Student</p>
+          <h1 className="display-title text-[clamp(3.2rem,15vw,7rem)] leading-[0.9] tracking-[-0.06em] text-white">Ives<br />Sanjines<br />Iriarte</h1>
+          <p className="mt-6 max-w-xs text-[10px] uppercase tracking-[0.22em] sm:mt-8 sm:text-xs sm:tracking-[0.3em] text-zinc-300">University of Central Florida<br />Orlando, Florida</p>
         </div>
-        <div className="mt-16 flex items-end justify-between border-t border-white/20 pt-4 font-mono text-[15px] tracking-[0.2em] text-zinc-400">
-          <span className="hidden sm:inline">CAR ENTHUSIAST</span>
-          <span className="sm:hidden">TOUCH &amp; DRAG TO EXPLORE</span>
-          <span className="hidden sm:inline">DESIGN / BUILD / TEST</span>
+        <div className="mt-12 border-t border-white/20 pt-4 sm:mt-16">
+          <label className="hero-mobile-scrubber mb-5 block sm:hidden" htmlFor="car-scrubber">
+            <span className="mb-2 block font-mono text-[10px] uppercase tracking-[0.18em] text-zinc-300">Swipe or slide to rotate</span>
+            <input ref={scrubberRef} id="car-scrubber" className="block w-full" type="range" min="0" max="1000" defaultValue="1000" aria-label="Rotate Nissan studio view" />
+          </label>
+          <div className="flex items-end justify-between font-mono text-[10px] tracking-[0.16em] text-zinc-400 sm:text-[12px] sm:tracking-[0.2em]">
+            <span className="hidden sm:inline">CAR ENTHUSIAST</span>
+            <span className="sm:hidden">INTERACTIVE VIEW</span>
+            <span className="hidden sm:inline">DESIGN / BUILD / TEST</span>
+          </div>
         </div>
       </div>
+      <aside className="video-credit-card" aria-label="Animation credit"><span>Concept animation</span></aside>
     </section>
   )
 }

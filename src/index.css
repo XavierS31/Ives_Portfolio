@@ -12,6 +12,7 @@ html { scroll-behavior: smooth; }
 section[id] { scroll-margin-top: 110px; }
 body { margin: 0; min-width: 320px; background: #08090a; }
 * { box-sizing: border-box; }
+button, a, input { -webkit-tap-highlight-color: transparent; }
 ::selection { background: #c24d43; color: #fff; }
 
 .display-title { font-weight: 700; line-height: 0.92; letter-spacing: -0.065em; text-transform: uppercase; }
@@ -39,6 +40,10 @@ body { margin: 0; min-width: 320px; background: #08090a; }
 .nav-link { position: relative; }
 .nav-link::after { content: ''; position: absolute; left: 0; right: 100%; bottom: -8px; height: 1px; background: #c24d43; transition: right 220ms ease; }
 .nav-link:hover::after, .nav-link:focus-visible::after { right: 0; }
+.hero-shell { cursor: ew-resize; }
+.hero-mobile-scrubber input { accent-color: #c24d43; height: 1.35rem; cursor: ew-resize; }
+.video-credit-card { position: absolute; right: max(0.75rem, env(safe-area-inset-right)); bottom: calc(0.75rem + env(safe-area-inset-bottom)); z-index: 1; padding: 0.3rem 0.45rem; border: 1px solid rgb(255 255 255 / 12%); border-radius: 0.4rem; background: rgb(8 9 10 / 62%); color: rgb(212 212 216 / 65%); font-family: var(--font-mono); font-size: 0.5rem; letter-spacing: 0.08em; text-transform: uppercase; pointer-events: none; backdrop-filter: blur(8px); }
+@media (max-width: 639px) { section[id] { scroll-margin-top: 132px; } .section-shell > .mx-auto { padding-left: 1.25rem; padding-right: 1.25rem; padding-top: 5rem; padding-bottom: 5rem; } .engineering-card { padding: 1.25rem; } .contact-links a { padding-block: 0.55rem; } .nav-link::after { bottom: 0; } .engineering-card { border-radius: 18px; } .intro-title { font-size: clamp(3.25rem, 16vw, 5.4rem); } .intro-lead { font-size: 1.45rem; line-height: 1.32; } .section-copy { font-size: 0.98rem; line-height: 1.7; } .hero-shell { cursor: default; } .hero-scrim { background: linear-gradient(180deg, rgba(8,9,10,.28) 0%, rgba(8,9,10,.1) 35%, rgba(8,9,10,.92) 100%); } .video-credit-card { bottom: calc(3.4rem + env(safe-area-inset-bottom)); opacity: 0.72; } }
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
