@@ -34,7 +34,7 @@ function PerformanceSection() {
       <div className="absolute inset-0 bg-gradient-to-r from-ink via-ink/70 to-transparent" aria-hidden="true" />
       <div className="relative mx-auto max-w-7xl px-6 py-28 md:px-10 lg:py-40">
         <div className="mb-20 max-w-xl">
-          <h2 className="section-title text-redline">Projects</h2>
+          <h2 className="silvia-section-mark text-redline">Projects</h2>
           
         </div>
         <div className="grid items-stretch gap-8 md:grid-cols-2">

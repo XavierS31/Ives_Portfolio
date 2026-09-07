@@ -127,7 +127,7 @@ function InteractiveCarHero() {
   return (
     <section ref={heroRef} id="top" className="hero-shell relative isolate min-h-[100dvh] touch-pan-y overflow-hidden" aria-label="Interactive Nissan S15 hero">
       <div className="hero-video-wrap absolute inset-0 -z-10 bg-[#111]">
-        <video ref={videoRef} className="hero-video h-full w-full object-cover object-center" muted playsInline preload="auto" poster="/assets/nissan3.png" aria-label="Nissan S15 rotating through a studio shot">
+        <video ref={videoRef} className="hero-video h-full w-full object-cover" muted playsInline preload="auto" poster="/assets/nissan3.png" aria-label="Nissan S15 rotating through a studio shot">
           <source src="/assets/nissanVid.mp4" type="video/mp4" />
         </video>
       </div>
@@ -136,7 +136,7 @@ function InteractiveCarHero() {
       <div className="relative mx-auto flex min-h-[100dvh] max-w-[1400px] flex-col justify-end px-5 pb-7 pt-28 sm:px-8 lg:px-10 lg:pb-12">
         <div className="max-w-[600px]">
           <p className="hero-role eyebrow mb-4 text-[11px] font-bold tracking-[0.22em] text-white sm:mb-5 sm:text-[13px] sm:tracking-[0.3em]">Mechanical Engineering Student</p>
-          <h1 className="hero-name display-title text-[clamp(3.2rem,15vw,7rem)] leading-[0.9] tracking-[-0.06em] text-white">Ives<br />Sanjines<br />Iriarte</h1>
+          <h1 className="hero-name silvia-script display-title text-[clamp(2.8rem,11vw,5.75rem)] leading-[0.76] tracking-[-0.06em] text-white">Ives<br />Sanjines<br />Iriarte</h1>
           <p className="mt-6 max-w-xs text-[10px] uppercase tracking-[0.22em] sm:mt-8 sm:text-xs sm:tracking-[0.3em] text-zinc-300">University of Central Florida<br />Orlando, Florida</p>
         </div>
         <div className="mt-12 border-t border-white/20 pt-4 sm:mt-16">

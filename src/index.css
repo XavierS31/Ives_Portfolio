@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Michroma&display=swap');
 @import 'tailwindcss';
 
 @theme {
@@ -35,19 +36,24 @@ button, a, input { -webkit-tap-highlight-color: transparent; }
 .contact-links a { padding-block: 6px; transition: color 180ms ease; }
 .contact-links a:hover { color: #fff; }
 .contact-links a:focus-visible { outline: 2px solid var(--color-redline); outline-offset: 4px; }
-.hero-video-wrap { inset: clamp(1.25rem, 3.25vw, 3.25rem); overflow: hidden; opacity: 1; background: #111 url('/assets/nissan3.png') center / cover no-repeat; transition: opacity 700ms ease, inset 700ms cubic-bezier(.22, 1, .36, 1); }
-.hero-video { transform: scale(0.96); transform-origin: center; transition: transform 700ms cubic-bezier(.22, 1, .36, 1); }
+.hero-video-wrap { inset: clamp(1.25rem, 3.25vw, 3.25rem); overflow: hidden; opacity: 1; background: #111 url('/assets/nissan3.png') 72% center / cover no-repeat; transition: opacity 700ms ease, inset 700ms cubic-bezier(.22, 1, .36, 1); }
+.hero-video { object-position: 72% center; transform: scale(0.96); transform-origin: center; transition: transform 700ms cubic-bezier(.22, 1, .36, 1); }
+.silvia-section-mark { display: inline-block; font-family: "Michroma", "Arial Nova", sans-serif; font-size: clamp(2rem, 4.5vw, 3.8rem); font-style: normal; font-weight: 400; letter-spacing: -0.085em; line-height: 0.9; text-transform: uppercase; transform: skewX(-9deg) scaleX(1.045); transform-origin: left center; }
+.silvia-script { display: inline-block; font-family: "Michroma", "Arial Nova", sans-serif; font-style: normal; font-weight: 400; letter-spacing: -0.085em; line-height: 0.9; text-transform: uppercase; transform: skewX(-9deg) scaleX(1.045); transform-origin: left center; }
 .hero-name { text-shadow: 0 3px 10px rgb(0 0 0 / 90%), 0 14px 34px rgb(0 0 0 / 72%); }
 .hero-role { display: inline-block; border-left: 2px solid var(--color-redline); background: rgb(8 9 10 / 80%); box-shadow: 0 8px 22px rgb(0 0 0 / 24%); padding: 0.6rem 0.75rem; }
 .watermark-card { position: absolute; right: max(1rem, env(safe-area-inset-right)); bottom: max(1rem, env(safe-area-inset-bottom)); z-index: 1; width: clamp(4.75rem, 8vw, 7rem); height: clamp(1.2rem, 2.2vw, 1.75rem); background: #08090a; pointer-events: none; }
 .hero-video-wrap.is-ready { opacity: 1; }
 .hero-scrim { background: linear-gradient(180deg, rgba(8,9,10,.4) 0%, rgba(8,9,10,.04) 40%, rgba(8,9,10,.82) 100%); }
+.nav-brand { display: inline-flex; align-items: center; gap: 0.75rem; color: #fff; font-size: 1.25rem; line-height: 1; white-space: nowrap; }
+.nav-brand .silvia-script { font-size: 0.86rem; letter-spacing: 0.055em; line-height: 1; }
+.nav-nissan-logo { width: 2.6rem; height: 1.35rem; object-fit: contain; object-position: center; }
 .nav-link { position: relative; }
 .nav-link::after { content: ''; position: absolute; left: 0; right: 100%; bottom: -8px; height: 1px; background: #c24d43; transition: right 220ms ease; }
 .nav-link:hover::after, .nav-link:focus-visible::after { right: 0; }
 .hero-shell { cursor: ew-resize; }
 .hero-mobile-scrubber input { accent-color: #c24d43; height: 1.35rem; cursor: ew-resize; }
-@media (max-width: 639px) { section[id] { scroll-margin-top: 132px; } .section-shell > .mx-auto { padding-left: 1.25rem; padding-right: 1.25rem; padding-top: 5rem; padding-bottom: 5rem; } .engineering-card { padding: 1.25rem; } .contact-links a { padding-block: 0.55rem; } .nav-link::after { bottom: 0; } .engineering-card { border-radius: 18px; } .intro-title { font-size: clamp(3.25rem, 16vw, 5.4rem); } .section-title { font-size: clamp(2.65rem, 12.5vw, 4.4rem); letter-spacing: -0.06em; } .intro-lead { font-size: 1.45rem; line-height: 1.32; } .section-copy { font-size: 0.98rem; line-height: 1.7; } .hero-shell { cursor: default; } .hero-video-wrap { inset: 0.8rem; } .hero-video { transform: scale(0.97); } .watermark-card { right: max(0.8rem, env(safe-area-inset-right)); bottom: calc(4rem + env(safe-area-inset-bottom)); width: 5rem; height: 1.35rem; } .hero-scrim { background: linear-gradient(180deg, rgba(8,9,10,.28) 0%, rgba(8,9,10,.1) 35%, rgba(8,9,10,.92) 100%); } }
+@media (max-width: 639px) { section[id] { scroll-margin-top: 132px; } .section-shell > .mx-auto { padding-left: 1.25rem; padding-right: 1.25rem; padding-top: 5rem; padding-bottom: 5rem; } .engineering-card { padding: 1.25rem; } .contact-links a { padding-block: 0.55rem; } .nav-link::after { bottom: 0; } .engineering-card { border-radius: 18px; } .intro-title { font-size: clamp(3.25rem, 16vw, 5.4rem); } .nav-brand { font-size: 1.08rem; } .nav-brand .silvia-script { font-size: 0.68rem; letter-spacing: 0.035em; } .nav-nissan-logo { width: 2.15rem; height: 1.1rem; } .section-title { font-size: clamp(2.65rem, 12.5vw, 4.4rem); letter-spacing: -0.06em; } .intro-lead { font-size: 1.45rem; line-height: 1.32; } .section-copy { font-size: 0.98rem; line-height: 1.7; } .hero-shell { cursor: default; } .hero-video-wrap { inset: 0.8rem; background-position: 66% center; } .hero-video { object-position: 66% center; transform: scale(0.97); } .watermark-card { right: max(0.8rem, env(safe-area-inset-right)); bottom: calc(4rem + env(safe-area-inset-bottom)); width: 5rem; height: 1.35rem; } .hero-scrim { background: linear-gradient(180deg, rgba(8,9,10,.28) 0%, rgba(8,9,10,.1) 35%, rgba(8,9,10,.92) 100%); } }
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
