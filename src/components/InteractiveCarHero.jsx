@@ -42,7 +42,7 @@ function InteractiveCarHero() {
       if (isReadyRef.current && Number.isFinite(video.duration)) {
         const delta = targetTimeRef.current - currentTimeRef.current
         // Time-based easing feels consistent across refresh rates.
-        currentTimeRef.current += delta * (1 - Math.exp(-elapsed / 240))
+        currentTimeRef.current += delta * (1 - Math.exp(-elapsed / 320))
         if (Math.abs(delta) < frameTolerance) currentTimeRef.current = targetTimeRef.current
         // Let the decoder finish before requesting another frame. Repeatedly
         // interrupting an active seek can prevent frames from being displayed.
@@ -73,6 +73,8 @@ function InteractiveCarHero() {
     }
 
     const onPointerDown = (event) => {
+      // Keep the range control in charge of its own touch drag.
+      if (event.target === scrubberRef.current) return
       if (isReadyRef.current && event.pointerType !== 'mouse' && event.isPrimary) {
         dragRef.current.pointerId = event.pointerId
         setTargetFromX(event.clientX)
@@ -88,7 +90,11 @@ function InteractiveCarHero() {
 
     const onScrub = (event) => {
       if (!isReadyRef.current || !Number.isFinite(video.duration)) return
-      targetTimeRef.current = (Number(event.currentTarget.value) / 1000) * endTime()
+      const nextTime = (Number(event.currentTarget.value) / 1000) * endTime()
+      // Seeking immediately keeps short mobile slider drags visibly responsive.
+      targetTimeRef.current = nextTime
+      currentTimeRef.current = nextTime
+      if (!video.seeking) video.currentTime = nextTime
     }
 
     video.addEventListener('loadedmetadata', revealAtEnd)
@@ -121,15 +127,16 @@ function InteractiveCarHero() {
   return (
     <section ref={heroRef} id="top" className="hero-shell relative isolate min-h-[100dvh] touch-pan-y overflow-hidden" aria-label="Interactive Nissan S15 hero">
       <div className="hero-video-wrap absolute inset-0 -z-10 bg-[#111]">
-        <video ref={videoRef} className="h-full w-full object-cover object-center" muted playsInline preload="auto" poster="/assets/nissan3.png" aria-label="Nissan S15 rotating through a studio shot">
+        <video ref={videoRef} className="hero-video h-full w-full object-cover object-center" muted playsInline preload="auto" poster="/assets/nissan3.png" aria-label="Nissan S15 rotating through a studio shot">
           <source src="/assets/nissanVid.mp4" type="video/mp4" />
         </video>
       </div>
       <div className="hero-scrim absolute inset-0 -z-[5]" aria-hidden="true" />
+      <div className="watermark-card" aria-hidden="true" />
       <div className="relative mx-auto flex min-h-[100dvh] max-w-[1400px] flex-col justify-end px-5 pb-7 pt-28 sm:px-8 lg:px-10 lg:pb-12">
         <div className="max-w-[600px]">
-          <p className="eyebrow mb-4 text-[11px] font-bold tracking-[0.22em] text-zinc-200 sm:mb-5 sm:text-[13px] sm:tracking-[0.3em]">Mechanical Engineering Student</p>
-          <h1 className="display-title text-[clamp(3.2rem,15vw,7rem)] leading-[0.9] tracking-[-0.06em] text-white">Ives<br />Sanjines<br />Iriarte</h1>
+          <p className="hero-role eyebrow mb-4 text-[11px] font-bold tracking-[0.22em] text-white sm:mb-5 sm:text-[13px] sm:tracking-[0.3em]">Mechanical Engineering Student</p>
+          <h1 className="hero-name display-title text-[clamp(3.2rem,15vw,7rem)] leading-[0.9] tracking-[-0.06em] text-white">Ives<br />Sanjines<br />Iriarte</h1>
           <p className="mt-6 max-w-xs text-[10px] uppercase tracking-[0.22em] sm:mt-8 sm:text-xs sm:tracking-[0.3em] text-zinc-300">University of Central Florida<br />Orlando, Florida</p>
         </div>
         <div className="mt-12 border-t border-white/20 pt-4 sm:mt-16">
@@ -144,7 +151,7 @@ function InteractiveCarHero() {
           </div>
         </div>
       </div>
-      <aside className="video-credit-card" aria-label="Animation credit"><span>Concept animation</span></aside>
+
     </section>
   )
 }

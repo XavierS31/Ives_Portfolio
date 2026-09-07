@@ -30,7 +30,7 @@ function LegacySection() {
       <div className="relative mx-auto max-w-7xl px-6 py-28 md:px-10 lg:py-40">
           <div className="grid items-stretch gap-8 md:auto-rows-fr md:grid-cols-2">
             <div className="self-center py-6 md:pr-6">
-              <p className="eyebrow text-[55px] font-semibold tracking-[0.35em] text-redline">Experience</p>
+              <h2 className="section-title text-redline">Experience</h2>
               
             </div>
             {experience.map((item) => (

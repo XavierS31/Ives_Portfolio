@@ -14,7 +14,7 @@ function DesignSection() {
       <div className="absolute inset-0 bg-gradient-to-r from-ink via-ink/70 to-transparent" aria-hidden="true" />
       <div className="relative mx-auto grid min-h-[82dvh] max-w-7xl items-end gap-14 px-6 py-20 md:px-10 lg:grid-cols-2 lg:py-28">
         <div className="lg:self-center">
-          <h2 className="display-title max-w-3xl text-6xl sm:text-8xl lg:text-[6rem]">Technical<br /><span className="text-zinc-400">SKILLS</span><br /></h2><span className="text-redline">.</span>
+          <h2 className="display-title section-title max-w-3xl">Technical<br /><span className="text-zinc-400">Skills</span><span className="text-redline">.</span></h2>
         </div>
         <dl className="border-t border-white/20 bg-ink/70 px-6">
           {skills.map(([category, tools]) => (
