@@ -59,3 +59,16 @@ button, a, input { -webkit-tap-highlight-color: transparent; }
   html { scroll-behavior: auto; }
   *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
 }
+
+.case-study-card { display: flex; flex-direction: column; }
+.case-study-lead-image { aspect-ratio: 16 / 9; background: #0b0c0d; object-fit: cover; object-position: var(--image-position, 50% 50%); transition: transform 300ms ease, filter 300ms ease; }
+@media (hover: hover) { .case-study-card:hover > .case-study-lead-image { filter: saturate(1.08); transform: scale(1.015); } }
+.case-study-button, .case-study-close { border: 1px solid rgb(194 77 67 / 80%); background: transparent; color: #fff; font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.14em; line-height: 1; padding: 0.82rem 1rem; text-transform: uppercase; transition: background 180ms ease, color 180ms ease, transform 180ms ease; }
+.case-study-button:hover, .case-study-close:hover { background: #c24d43; color: #fff; }
+.case-study-button:active, .case-study-close:active { transform: translateY(1px); }
+.case-study-button:focus-visible, .case-study-close:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
+.case-study-modal { inset: 0; position: fixed; z-index: 60; }
+.case-study-backdrop { background: rgb(8 9 10 / 96%); inset: 0; position: absolute; }
+.case-study-panel { background: #101113; border: 1px solid rgb(255 255 255 / 18%); box-shadow: 0 28px 80px rgb(0 0 0 / 50%); height: 100dvh; inset: 0; overflow-y: auto; padding: clamp(1.25rem, 4vw, 4rem); position: absolute; width: 100%; }
+.case-study-panel img { max-height: 430px; min-height: 210px; }
+@media (max-width: 639px) { .case-study-panel { padding: 1.25rem; } .case-study-panel img { min-height: 180px; } }
